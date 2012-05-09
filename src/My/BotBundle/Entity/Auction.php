@@ -23,48 +23,48 @@ class Auction
 	 * @ORM\Column(type="boolean")
 	 */
 	private $status;
-	
+
 	/**
 	 * @ORM\Column(type="string", length=50)
 	 */
 	private $link;
-	
+
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
 	private $startAt;
-	
+
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
 	private $endAt;
-	
+
 	/**
 	 * @ORM\Column(type="decimal", scale=2, precision=4)
 	 */
 	private $step;
-	
+
 	/**
 	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="auctions", fetch="LAZY")
 	 */
 	private $product;
-	
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction")
 	 */
 	private $bids;
-	
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Setting", mappedBy="auctions")
 	 */
 	private $settings;
-	
-	
+
+
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
 
 	/** @ORM\Column(type="datetime", nullable=true) */
-	private $modifiedAt;
+	private $updatedAt;
 
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
@@ -81,9 +81,9 @@ class Auction
 	/** @ORM\PreUpdate */
 	public function preUpdate()
 	{
-		$this->setModifiedAt(new \DateTime());
+		$this->setUpdatedAt(new \DateTime());
 	}
-	
+
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
@@ -100,7 +100,7 @@ class Auction
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -120,7 +120,7 @@ class Auction
     /**
      * Get status
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getStatus()
     {
@@ -140,7 +140,7 @@ class Auction
     /**
      * Get link
      *
-     * @return string 
+     * @return string
      */
     public function getLink()
     {
@@ -160,7 +160,7 @@ class Auction
     /**
      * Get startAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStartAt()
     {
@@ -180,7 +180,7 @@ class Auction
     /**
      * Get endAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getEndAt()
     {
@@ -200,7 +200,7 @@ class Auction
     /**
      * Get step
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getStep()
     {
@@ -220,7 +220,7 @@ class Auction
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -240,7 +240,7 @@ class Auction
     /**
      * Get modifiedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getModifiedAt()
     {
@@ -260,7 +260,7 @@ class Auction
     /**
      * Get product
      *
-     * @return My\BotBundle\Entity\Product 
+     * @return My\BotBundle\Entity\Product
      */
     public function getProduct()
     {
@@ -280,7 +280,7 @@ class Auction
     /**
      * Get bids
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getBids()
     {
@@ -300,10 +300,30 @@ class Auction
     /**
      * Get settings
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getSettings()
     {
         return $this->settings;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

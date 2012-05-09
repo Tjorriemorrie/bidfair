@@ -22,6 +22,7 @@ class AuctionRepository extends EntityRepository
 		if ($status == 'active') {
 			$qb->select('a')->from('\MyBotBundle:Auction', 'a')
 				->where('a.status = 1')
+				->andWhere('a.endAt > ?2')->setParameter(2, date('Y-m-d H:i:s', strtotime('-10 minutes')))
 				->orderBy('a.endAt', 'ASC')
 				->setMaxResults(3);
 		} else {
@@ -69,16 +70,49 @@ class AuctionRepository extends EntityRepository
 
 
 	/**
-	 * Get Oldest Active
+	 * Get Auctions to scrape
 	 */
 	public function getScrapeIds()
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
-		$auctionIds = $qb->select('a.id')->from('\MyBotBundle:Auction', 'a')
+		$auctions = $qb->select('a')->from('\MyBotBundle:Auction', 'a')
 			->where('a.status = 1')
 			->getQuery()
 			->getResult();
 
+		if (!$auctions) {
+			return $this->getNextScrapeIds();
+		}
+
+		$data = array();
+
+		foreach ($auctions as $auction) {
+
+			// skip open auctions but that has expired (only if up to date)
+			if (!is_null($auction->getUpdatedAt()) && $auction->getUpdatedAt() > new \DateTime('-1 minute')) {
+				if ($auction->getEndAt() < new \DateTime('-10 minutes')) {
+					continue;
+				}
+			}
+
+			$data['auction_' . $auction->getId()] = $auction->getId();
+		}
+
+		if (count($data) < 4) {
+			$nextScrapeIds = $this->getNextScrapeIds();
+			$data = array_merge($data, $nextScrapeIds);
+		}
+
+		return $data;
+	}
+
+
+	/**
+	 * Get Next Scrape IDs
+	 * @see getScrapeIds
+	 */
+	private function getNextScrapeIds()
+	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		$lastId = $qb->select('a.id')->from('\MyBotBundle:Auction', 'a')
 			->orderBy('a.id', 'DESC')
@@ -91,13 +125,9 @@ class AuctionRepository extends EntityRepository
 		}
 
 		$data = array();
-		foreach ($auctionIds as $auctionId) {
-			$data['auction_' . $auctionId['id']] = $auctionId['id'];
-		}
-
 		while (count($data) < 16) {
-			$lastId[0]['id']++;
 			$data['auction_' . $lastId[0]['id']] = (string)$lastId[0]['id'];
+			$lastId[0]['id']++;
 		}
 
 		return $data;

@@ -45,13 +45,12 @@ class ScraperService
 			return;
 		}
 
+		//die(var_dump($data));
 		foreach ($data as $item) {
 
 			// if no auction id, it does not exist
 			if (!isset($item->Auction->id)) {
 				continue;
-			} elseif ($item->Auction->id == 7315) {
-				die(var_dump($item));
 			}
 
 			// auction
@@ -80,22 +79,13 @@ class ScraperService
 				$auction->setStatus(!$item->Auction->closed);
 			}
 
-			// update time remaining
-			$timeLefts = explode(' ', $item->Auction->time_left);
-			$timeLeft = new \DateTime(end($timeLefts));
-			if (count($timeLefts) > 1) {
-				$timeLeft->add(new \DateInterval())
+			// time left?
+			if ($item->Auction->time_left == 1 && $item->Auction->end_time_string == '00:00:00' && new \DateTime($item->Auction->closes_on) < new \DateTime()) {
+				$endAt = new \DateTime('-11 minutes');
+			} else {
+				$endAt = new \DateTime($item->Auction->time_left . ' seconds');
 			}
-			
-			//$timeLeft = new \DateInterval('P' . $item->Auction->time_left . 'S');
-			//$endAt->add($timeLeft);
 			$auction->setEndAt($endAt);
-			if ($endAt <= new \DateTime('-')) {
-				$auction->setStatus(0);
-			}
-			if ($item->Auction->id == 73241) {
-				die(var_dump($auction->getEndAt()));
-			}
 
 			// bid
 			if (isset($item->LastBid->id)) {

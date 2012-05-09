@@ -23,23 +23,23 @@ class Product
 	 * @ORM\Column(type="string", length=250, nullable=true)
 	 */
 	private $name;
-	
+
 	/**
 	 * @ORM\Column(type="decimal", scale=2, precision=4)
 	 */
 	private $retail;
-	
+
 	/**
 	 * @ORM\OneToMany(targetEntity="Auction", mappedBy="product")
 	 */
 	private $auctions;
-	
-	
+
+
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
 
 	/** @ORM\Column(type="datetime", nullable=true) */
-	private $modifiedAt;
+	private $updatedAt;
 
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
@@ -54,12 +54,21 @@ class Product
 	/** @ORM\PreUpdate */
 	public function preUpdate()
 	{
-		$this->setModifiedAt(new \DateTime());
+		$this->setUpdatedAt(new \DateTime());
 	}
-	
+
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
+    /**
+     * Set id
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * Get id
@@ -132,23 +141,23 @@ class Product
     }
 
     /**
-     * Set modifiedAt
+     * Set updatedAt
      *
-     * @param datetime $modifiedAt
+     * @param datetime $updatedAt
      */
-    public function setModifiedAt($modifiedAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->modifiedAt = $modifiedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * Get modifiedAt
+     * Get updatedAt
      *
      * @return datetime 
      */
-    public function getModifiedAt()
+    public function getUpdatedAt()
     {
-        return $this->modifiedAt;
+        return $this->updatedAt;
     }
 
     /**
@@ -169,15 +178,5 @@ class Product
     public function getAuctions()
     {
         return $this->auctions;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 }

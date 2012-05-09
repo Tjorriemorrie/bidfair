@@ -23,33 +23,33 @@ class Bid
 	 * @ORM\ManyToOne(targetEntity="Auction", inversedBy="bids", fetch="LAZY")
 	 */
 	private $auction;
-	
+
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
 	private $placedAt;
-	
+
 	/**
 	 * @ORM\Column(type="decimal", scale=2, precision=4)
 	 */
 	private $price;
-	
+
 	/**
 	 * @ORM\Column(type="string", length=50)
 	 */
 	private $source;
-	
+
 	/**
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="bids", fetch="EAGER")
 	 */
 	private $user;
-	
-	
+
+
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
 
 	/** @ORM\Column(type="datetime", nullable=true) */
-	private $modifiedAt;
+	private $updatedAt;
 
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
@@ -63,12 +63,21 @@ class Bid
 	/** @ORM\PreUpdate */
 	public function preUpdate()
 	{
-		$this->setModifiedAt(new \DateTime());
+		$this->setUpdatedAt(new \DateTime());
 	}
-	
+
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
+    /**
+     * Set id
+     *
+     * @param bigint $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * Get id
@@ -161,23 +170,23 @@ class Bid
     }
 
     /**
-     * Set modifiedAt
+     * Set updatedAt
      *
-     * @param datetime $modifiedAt
+     * @param datetime $updatedAt
      */
-    public function setModifiedAt($modifiedAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->modifiedAt = $modifiedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * Get modifiedAt
+     * Get updatedAt
      *
      * @return datetime 
      */
-    public function getModifiedAt()
+    public function getUpdatedAt()
     {
-        return $this->modifiedAt;
+        return $this->updatedAt;
     }
 
     /**
@@ -218,15 +227,5 @@ class Bid
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Set id
-     *
-     * @param bigint $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 }

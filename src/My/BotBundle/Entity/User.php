@@ -23,18 +23,18 @@ class User
 	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="user")
 	 */
 	private $bids;
-	
+
 	/**
 	 * @ORM\Column(type="string", length=50)
 	 */
 	private $username;
-	
-	
+
+
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
 
 	/** @ORM\Column(type="datetime", nullable=true) */
-	private $modifiedAt;
+	private $updatedAt;
 
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
@@ -49,12 +49,21 @@ class User
 	/** @ORM\PreUpdate */
 	public function preUpdate()
 	{
-		$this->setModifiedAt(new \DateTime());
+		$this->setUpdatedAt(new \DateTime());
 	}
-	
+
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
+    /**
+     * Set id
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * Get id
@@ -107,23 +116,23 @@ class User
     }
 
     /**
-     * Set modifiedAt
+     * Set updatedAt
      *
-     * @param datetime $modifiedAt
+     * @param datetime $updatedAt
      */
-    public function setModifiedAt($modifiedAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->modifiedAt = $modifiedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
-     * Get modifiedAt
+     * Get updatedAt
      *
      * @return datetime 
      */
-    public function getModifiedAt()
+    public function getUpdatedAt()
     {
-        return $this->modifiedAt;
+        return $this->updatedAt;
     }
 
     /**
@@ -144,15 +153,5 @@ class User
     public function getBids()
     {
         return $this->bids;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 }

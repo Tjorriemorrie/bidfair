@@ -30,6 +30,7 @@ class DefaultController extends Controller
 
     	$scraper = $this->get('scraper');
     	$scrapeIds = $em->getRepository('MyBotBundle:Auction')->getScrapeIds();
+
     	$data = $scraper->run($scrapeIds);
     	$scraper->process($data, $em);
     	$em->flush();
