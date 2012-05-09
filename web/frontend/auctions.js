@@ -44,24 +44,38 @@ $(function() {
 		$('#sparkline').sparkline(vm.lag(), {type: 'bar', barColor: 'green', colorMap: range_map, height: '2em'});
 	});
 	
+	// clean up database of stuck open auctions
+	vm.cleanup = function() {
+		$.getJSON('/cleanup', function(data) {
+			vm.bidfair(data);
+			setTimeout(function() {
+				vm.status();
+			}, 5000);
+		});
+	}
+	
 	// get updated bidfair status
 	// update every 5min
 	vm.status = function() {
 		$.getJSON('/bidfair', function(data) {
-			vm.bidfair('Logged in since ' + data);
+			vm.bidfair('Logged in for ' + data);
 			setTimeout(function() {
 				vm.status();
 			}, (1000 * 60 * 5));
 		});
 	}
 	
+	// configs
+	var range_map = $.range_map({
+	    ':499'		: 'green',
+	    '500:999'	: 'yellow',
+	    '999:'		: 'red'
+	});
+
 	// start
 	ko.applyBindings(vm);
-	var range_map = $.range_map({
-        ':499'		: 'green',
-        '500:999'	: 'yellow',
-        '999:'		: 'red'
-    });
 	vm.update();
-	vm.status();
+	setTimeout(function() {
+		vm.cleanup();
+	}, 5000);
 });

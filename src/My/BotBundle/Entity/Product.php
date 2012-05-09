@@ -25,7 +25,7 @@ class Product
 	private $name;
 
 	/**
-	 * @ORM\Column(type="decimal", scale=2, precision=4)
+	 * @ORM\Column(type="decimal", scale=2)
 	 */
 	private $retail;
 
@@ -73,7 +73,7 @@ class Product
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class Product
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -113,7 +113,7 @@ class Product
     /**
      * Get retail
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getRetail()
     {
@@ -133,7 +133,7 @@ class Product
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -153,7 +153,7 @@ class Product
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -173,7 +173,7 @@ class Product
     /**
      * Get auctions
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getAuctions()
     {

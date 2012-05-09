@@ -14,6 +14,28 @@ use Doctrine\ORM\Query;
 class AuctionRepository extends EntityRepository
 {
 	/**
+	 * Delete open stuck auctions
+	 */
+	public function cleanUp()
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$auctions = $qb->select('a')->from('\MyBotBundle:Auction', 'a')
+			->where('a.status = ?1')->setParameter(1, 1)
+			->andWhere('a.endAt < ?2')->setParameter(2, date('Y-m-d H:i:s', strtotime('-2 day')))
+			->andWhere('a.createdAt < ?2')
+			//->andWhere('a.updatedAt > ?3')->setParameter(3, date('Y-m-d H:i:s', strtotime('-1 hour')))
+			->getQuery()
+			->getResult();
+
+		foreach ($auctions as $auction) {
+			$this->getEntityManager()->remove($auction);
+		}
+		$this->getEntityManager()->flush();
+		return count($auctions);
+	}
+
+
+	/**
 	 * Get hydrated array
 	 */
 	public function getHydrated($status)
@@ -24,7 +46,7 @@ class AuctionRepository extends EntityRepository
 				->where('a.status = 1')
 				->andWhere('a.endAt > ?2')->setParameter(2, date('Y-m-d H:i:s', strtotime('-10 minutes')))
 				->orderBy('a.endAt', 'ASC')
-				->setMaxResults(3);
+				->setMaxResults(4);
 		} else {
 			$qb->select('a')->from('\MyBotBundle:Auction', 'a')
 				->where('a.status = 0')
@@ -98,7 +120,7 @@ class AuctionRepository extends EntityRepository
 			$data['auction_' . $auction->getId()] = $auction->getId();
 		}
 
-		if (count($data) < 4) {
+		if (count($data) < 16) {
 			$nextScrapeIds = $this->getNextScrapeIds();
 			$data = array_merge($data, $nextScrapeIds);
 		}

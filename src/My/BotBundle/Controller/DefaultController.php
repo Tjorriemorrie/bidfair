@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+    	return array();
     }
 
 
@@ -64,6 +64,19 @@ class DefaultController extends Controller
     		$session->set('loggedInAt', $loggedInAt);
     	}
 
-    	return new Response(json_encode($loggedInAt->format('Y-m-d H:i:s')));
+    	$timeAgo = $bidfair->convertTimeAgo($loggedInAt->getTimestamp());
+
+    	return new Response(json_encode($timeAgo));
+    }
+
+
+    /**
+     * @Route("/cleanup")
+     */
+    public function cleanupAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$removed = $em->getRepository('MyBotBundle:Auction')->cleanUp();
+    	return new Response(json_encode('Cleaned up ' . $removed));
     }
 }

@@ -50,12 +50,12 @@ class Auction
 	private $product;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction")
+	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction", cascade={"remove"}, orphanRemoval=true)
 	 */
 	private $bids;
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Setting", mappedBy="auctions")
+	 * @ORM\OneToMany(targetEntity="Setting", mappedBy="auctions", cascade={"remove"}, orphanRemoval=true)
 	 */
 	private $settings;
 
@@ -320,7 +320,7 @@ class Auction
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {

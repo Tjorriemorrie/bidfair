@@ -68,7 +68,7 @@ class ScraperService
 				if (!$product) {
 					$product = new \My\BotBundle\Entity\Product();
 					$product->setId($item->Product->id);
-					$product->setRetail($item->Product->rrp);
+					$product->setRetail((float)$item->Product->rrp);
 					$em->persist($product);
 				}
 				$auction->setProduct($product);
