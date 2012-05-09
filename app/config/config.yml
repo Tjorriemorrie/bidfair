@@ -59,9 +59,12 @@ jms_security_extra:
     secure_controllers:  true
     secure_all_services: false
 
+#Parameters
+
 # Services
 services:
     scraper:
         class: My\BotBundle\Service\ScraperService
     bidfair:
         class: My\BotBundle\Service\BidfairService
+        arguments: [%bidfair_username%, %bidfair_password%]

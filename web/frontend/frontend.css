@@ -1,2 +1,4 @@
+.marginTopSmall					{margin-top:1em;}
 .marginTop						{margin-top:4em;}
 #sparkline						{margin-top:0.5em;}
+.borderDashed					{border-bottom:2px dashed #eee;}

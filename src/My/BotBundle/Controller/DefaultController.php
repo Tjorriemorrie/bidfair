@@ -38,7 +38,7 @@ class DefaultController extends Controller
     	$active = $em->getRepository('MyBotBundle:Auction')->getHydrated('active');
     	$closed = $em->getRepository('MyBotBundle:Auction')->getHydrated('closed');
     	$auctions = array_merge($active, $closed);
-
+    	
     	return new Response(json_encode($auctions));
     }
 

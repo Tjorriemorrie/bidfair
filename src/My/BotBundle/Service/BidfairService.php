@@ -7,6 +7,17 @@ namespace My\BotBundle\Service;
  */
 class BidfairService
 {
+	private $username;
+	private $password;
+	
+	
+	public function __construct($username, $password)
+	{
+		$this->username = $username;
+		$this->password = $password;
+	}
+	
+
 	/**
 	 * Are we logged in?
 	 * @return true if logged in
@@ -32,9 +43,9 @@ class BidfairService
 		$url = 'http://www.bidfair.co.za/users/login';
 
 		$fields = array(
-			'data[User][username]'		=> 'bot',
-			'data[User][password]'		=> 'cyis2cyis',
-			'data[User][remember_me]'	=> '0',
+			'data[User][username]'		=> $this->username,
+			'data[User][password]'		=> $this->password,
+			'data[User][remember_me]'	=> 1,
 		);
 
 		$page = $this->makeRequest($url, $fields);

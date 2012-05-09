@@ -46,12 +46,12 @@ class AuctionRepository extends EntityRepository
 				->where('a.status = 1')
 				->andWhere('a.endAt > ?2')->setParameter(2, date('Y-m-d H:i:s', strtotime('-10 minutes')))
 				->orderBy('a.endAt', 'ASC')
-				->setMaxResults(4);
+				->setMaxResults(6);
 		} else {
 			$qb->select('a')->from('\MyBotBundle:Auction', 'a')
 				->where('a.status = 0')
 				->orderBy('a.endAt', 'DESC')
-				->setMaxResults(1);
+				->setMaxResults(2);
 		}
 
 		$info = $qb->getQuery()->getResult();
@@ -69,14 +69,14 @@ class AuctionRepository extends EntityRepository
 		foreach ($info as $item) {
 			$data[] = array(
 				'auctionId'	=> $item->getId(),
-				'status'	=> $item->getStatus(),
+				'status'	=> ($item->getStatus() ? 'Open' : 'Closed'),
 				'step'		=> $item->getStep(),
 				'startAt'	=> $item->getStartAt()->format('Y-m-d H:i:s'),
-				'endAt'		=> $item->getEndAt()->diff(new \DateTime())->format('%R%H:%I:%S'),
+				'endAt'		=> $item->getEndAt()->diff(new \DateTime())->format('%H:%I:%S'),
 
 				'productId'		=> $item->getProduct()->getId(),
 				'productName'	=> $item->getProduct()->getName(),
-				'productRetail'	=> $item->getProduct()->getRetail(),
+				'productRetail'	=> number_format($item->getProduct()->getRetail()),
 
 				'price'		=> ($item->getBids()->count() ? $item->getBids()->last()->getPrice() : '-.--'),
 				'userId'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getId() : '-'),

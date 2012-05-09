@@ -54,4 +54,104 @@ class Setting
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param datetime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param datetime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set auction
+     *
+     * @param My\BotBundle\Entity\Auction $auction
+     */
+    public function setAuction(\My\BotBundle\Entity\Auction $auction)
+    {
+        $this->auction = $auction;
+    }
+
+    /**
+     * Get auction
+     *
+     * @return My\BotBundle\Entity\Auction 
+     */
+    public function getAuction()
+    {
+        return $this->auction;
+    }
 }

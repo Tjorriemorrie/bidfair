@@ -5,8 +5,20 @@ namespace My\BotBundle\Service;
 class ScraperService
 {
 	private $url_bidfair_update = 'http://www.bidfair.co.za/getstatus.php';
-
-
+	// products
+	private $products = array(
+		496 => 'JVC DVD Digital Theater System',
+		415 => 'BidFair Deluxe Sports Pack',
+		409 => 'Beach Luxurious Sun Proof Canopies',
+		403 => 'Boogie Board',
+		299 => 'Nikon Travelite',
+		239 => 'TaylorMade Tour Preferred MB Irons',
+		186 => 'PLATINUM Voucher 80 FREE Bids',
+		155 => 'GOLD Voucher 40 FREE Bids',
+		 78 => 'GOLD Voucher 40 FREE Bids',
+	);
+	
+	
 	public function run($scrapeIds)
 	{
 		list($junk, $ms) = explode(' ', microtime());
@@ -68,6 +80,11 @@ class ScraperService
 				if (!$product) {
 					$product = new \My\BotBundle\Entity\Product();
 					$product->setId($item->Product->id);
+					if (array_key_exists($item->Product->id, $this->products)) {
+						$product->setName($this->products[$item->Product->id]);
+					} else {
+						$product->setName('???');
+					}
 					$product->setRetail((float)$item->Product->rrp);
 					$em->persist($product);
 				}
