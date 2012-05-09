@@ -1,0 +1,89 @@
+<?php
+
+namespace My\BotBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity(repositoryClass="My\BotBundle\Repository\AuctionRepository")
+ * @ORM\Table(name="auctions")
+ * @ORM\HasLifecycleCallbacks
+ */
+class Auction
+{
+	/**
+	 * @ORM\Id @ORM\GeneratedValue(strategy="NONE")
+	 * @ORM\Column(type="integer")
+	 */
+	private $id;
+
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	private $status;
+	
+	/**
+	 * @ORM\Column(type="string", length=250)
+	 */
+	private $link;
+	
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $startAt;
+	
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $endAt;
+	
+	/**
+	 * @ORM\Column(type="decimal", scale=2, precision=4)
+	 */
+	private $step;
+	
+	/**
+	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="auctions", fetch="LAZY")
+	 */
+	private $product;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction")
+	 */
+	private $bids;
+	
+	/**
+	 * @ORM\OneToMany(targetEntity="Setting", mappedBy="auctions")
+	 */
+	private $settings;
+	
+	
+	/** @ORM\Column(type="datetime") */
+	private $createdAt;
+
+	/** @ORM\Column(type="datetime", nullable=true) */
+	private $modifiedAt;
+
+	////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////
+
+	/** Construct */
+	public function __construct()
+	{
+		$this->createdAt = new \DateTime();
+		$this->bids = new ArrayCollection();
+		$this->settings = new ArrayCollection();
+		$this->status = 1;
+	}
+
+	/** @ORM\PreUpdate */
+	public function preUpdate()
+	{
+		$this->setModifiedAt(new \DateTime());
+	}
+	
+	////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////
+}

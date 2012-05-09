@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('sparklines/jquery.sparkline.min.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+	{% block navbar %}
+		<div class="navbar navbar-fixed-top">
+		    <div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="brand" href="#">Bidfair</a>
+
+					<a id="sparkline" class="pull-right">sparkline</a>
+
+				    <ul class="nav">
+				    	<li><a data-bind="text: bidfair"></a></li>
+				    	<li><a id="status" href="#"></a></li>
+				    </ul>
+				</div>
+    		</div>
+    	</div>
+	{% endblock %}
+	
+	{% block auctions %}{% endblock %}
+	
+{% endblock %}

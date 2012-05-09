@@ -1,0 +1,51 @@
+{% extends 'MyBotBundle::layout.html.twig' %}
+
+
+{% block auctions %}
+	<div class="container-fluid marginTop">
+
+		<div class="fluid-row">
+			<div class="span12">
+				<h5>Actions</h5>
+			</div>
+		</div>
+
+		
+		<!-- ko foreach: auctions --> 
+		<div class="row-fluid">
+			<div class="span4">
+				<p>Auction ID: <span data-bind="text: auctionId"></span></p>
+				<p>Auction Status: <span data-bind="text: status"></span></p>
+				<p>Auction Started: <span data-bind="text: startAt"></span></p>
+				<p>Auction Ending: <span data-bind="text: endAt"></span></p>
+				<p>Price Increments: <span data-bind="text: step"></span></p>
+			</div>
+			<div class="span4">
+				<p>Product ID: <span data-bind="text: productId"></span></p>
+				<p>Product Name: <span data-bind="text: productName"></span></p>
+				<p>Product Retail: <span data-bind="text: productRetail"></span></p>
+			</div>
+			<div class="span4">
+				<p>Bidding Price: <span data-bind="text: price"></span></p>
+				<p>User ID: <span data-bind="text: userId"></span></p>
+				<p>Username: <span data-bind="text: userName"></span></p>
+				<p>Source: <span data-bind="text: source"></span></p>
+			</div>
+		</div>
+		<!-- /ko -->
+		
+
+
+		{% if (app.debug) %}
+		<div class="row-fluid">
+			<div class="span12">
+				<h5>Debug:</h5>
+				<p>auctions: <span data-bind="text: ko.toJSON(auctions)"></span></p>
+				<p>lag: <span data-bind="text: ko.toJSON(lag)"></span></p>
+			</div>
+		</div>
+		{% endif %}
+
+	</div>
+{% endblock %}
+
