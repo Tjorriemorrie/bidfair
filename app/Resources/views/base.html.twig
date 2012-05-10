@@ -17,12 +17,12 @@
 		<link rel="stylesheet" href="{{ asset_url }}" />
 		{% endstylesheets %}
 		
-
-		{% javascripts output='main.js'
+		{% javascripts
         	'jquery/jquery-1.7.2.min.js'
         	'bootstrap/js/bootstrap.js'
-        	'knockout/knockout-2.0.0.js'
+        	'knockout/knockout-latest.js'
         	'knockout/knockout.mapping-latest.js'
+        	output='main.js'
 		%}
 		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}
@@ -31,9 +31,7 @@
     <body>
         {% block body %}{% endblock %}
 		
-		{% block javascripts %}
-			<script type="text/javascript" src="{{ asset('frontend/auctions.js') }}"></script>
-		{% endblock %}
+		{% block javascripts %}{% endblock %}
     </body>
     
 </html>

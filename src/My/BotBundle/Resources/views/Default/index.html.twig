@@ -1,6 +1,12 @@
 {% extends 'MyBotBundle::layout.html.twig' %}
 
 
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('frontend/auctions.js') }}"></script>
+{% endblock %}
+
+
 {% block auctions %}
 	<div class="container-fluid marginTop">
 
@@ -18,7 +24,7 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span3">
+			<div class="span4">
 				<p>
 					<em>[<span data-bind="text: auctionId"></span>]</em>
 					<strong><span data-bind="text: status"></span></strong>
@@ -41,7 +47,8 @@
 					<br>Cost <span data-bind="text: productRetail"></span>
 				</p>
 			</div>
-			<div class="span3">
+			<div class="span2">
+				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/fokus/auction/' + auctionId}">Fokus</a></p>
 			</div>
 		</div>
 		<!-- /ko -->

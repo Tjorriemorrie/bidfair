@@ -12,13 +12,18 @@ class ScraperService
 		409 => 'Beach Luxurious Sun Proof Canopies',
 		403 => 'Boogie Board',
 		299 => 'Nikon Travelite',
+		277 => 'Weber 57cm One Touch',
 		239 => 'TaylorMade Tour Preferred MB Irons',
 		186 => 'PLATINUM Voucher 80 FREE Bids',
 		155 => 'GOLD Voucher 40 FREE Bids',
+		150 => 'BidFair Deluxe Blackberry Pack',
+		123 => 'BidFair Deluxe Lifestyle Pack',
+		 93 => 'NINTENDO SUPER BUNDLE',
 		 78 => 'GOLD Voucher 40 FREE Bids',
+		  4 => 'Supreme Voucher 100 Bids',
 	);
-	
-	
+
+
 	public function run($scrapeIds)
 	{
 		list($junk, $ms) = explode(' ', microtime());
@@ -124,6 +129,7 @@ class ScraperService
 						$user->setUsername($item->LastBid->username);
 						$em->persist($user);
 					}
+					$user->setLastBidAt(new \DateTime($item->LastBid->created));
 					$bid->setUser($user);
 				}
 

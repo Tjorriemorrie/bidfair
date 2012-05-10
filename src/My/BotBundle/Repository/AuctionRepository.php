@@ -78,7 +78,7 @@ class AuctionRepository extends EntityRepository
 				'productName'	=> $item->getProduct()->getName(),
 				'productRetail'	=> number_format($item->getProduct()->getRetail()),
 
-				'price'		=> ($item->getBids()->count() ? $item->getBids()->last()->getPrice() : '-.--'),
+				'price'		=> ($item->getBids()->count() ? number_format($item->getBids()->last()->getPrice(), 2) : '-.--'),
 				'userId'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getId() : '-'),
 				'userName'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getUsername() : '-'),
 				'source'	=> ($item->getBids()->count() ? $item->getBids()->last()->getSource() : '-'),

@@ -29,6 +29,11 @@ class User
 	 */
 	private $username;
 
+	/**
+	 * @ORM\Column(type="datetime", nullable=true)
+	 */
+	private $lastBidAt;
+
 
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
@@ -68,7 +73,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +93,7 @@ class User
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -108,7 +113,7 @@ class User
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -128,7 +133,7 @@ class User
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -148,10 +153,30 @@ class User
     /**
      * Get bids
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getBids()
     {
         return $this->bids;
+    }
+
+    /**
+     * Set lastBidAt
+     *
+     * @param datetime $lastBidAt
+     */
+    public function setLastBidAt($lastBidAt)
+    {
+        $this->lastBidAt = $lastBidAt;
+    }
+
+    /**
+     * Get lastBidAt
+     *
+     * @return datetime 
+     */
+    public function getLastBidAt()
+    {
+        return $this->lastBidAt;
     }
 }
