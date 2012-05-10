@@ -77,6 +77,10 @@ class AuctionRepository extends EntityRepository
 				'productId'		=> $item->getProduct()->getId(),
 				'productName'	=> $item->getProduct()->getName(),
 				'productRetail'	=> number_format($item->getProduct()->getRetail()),
+				'auctionCount'	=> $item->getProduct()->getAuctions()->count(),
+				'avgPrice'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep(), 2),
+				'stdDev'		=> number_format($item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
+				'startAt'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep() + $item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
 
 				'price'		=> ($item->getBids()->count() ? number_format($item->getBids()->last()->getPrice(), 2) : '-.--'),
 				'userId'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getId() : '-'),
@@ -143,7 +147,7 @@ class AuctionRepository extends EntityRepository
 			->getResult();
 
 		if (!$lastId) {
-			$lastId[0]['id'] = 7280;
+			$lastId[0]['id'] = 1;
 		}
 
 		$data = array();

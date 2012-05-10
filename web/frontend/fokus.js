@@ -2,13 +2,18 @@ $(function() {
 	console.log('fokus.js rdy');
 	
 	var vm = {
-		active		: ko.observable('?'),
-		endAt		: ko.observable('?'),
-		price		: ko.observable('?'),
-		username	: ko.observable('?'),
+		active		: ko.observable(0),
+		endAt		: ko.observable(0),
+		price		: ko.observable(0),
+		username	: ko.observable(''),
 		bidfair		: ko.observable('loading...'),
 		lag			: ko.observableArray([]),
 	};
+	
+	// bids made
+	vm.bidCount = ko.computed(function() {
+		return Math.round(vm.price() * 100);
+	}, vm);
 	
 	// update auction
 	vm.update = function() {

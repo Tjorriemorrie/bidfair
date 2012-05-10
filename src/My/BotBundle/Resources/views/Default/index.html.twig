@@ -33,6 +33,7 @@
 					<em>[<span data-bind="text: productId"></span>]</em>
 					<strong><span data-bind="text: productName"></span></strong>
 				</p>
+				<p>Been on <em data-bind="text: auctionCount"></em> auctions.</p>
 			</div>
 			<div class="span3">
 				<h3 data-bind="text: endAt"></h3>
@@ -43,11 +44,13 @@
 			</div>
 			<div class="span3">
 				<p>
-					+<span data-bind="text: step"></span> per bid
-					<br>Cost <span data-bind="text: productRetail"></span>
+					Cost <span data-bind="text: productRetail"></span> retail
+					<br>Increase <span data-bind="text: step"></span> per bid
+					<br>Exp avg price of <span data-bind="text: avgPrice"></span> with a stddev of <span data-bind="text: stdDev"></span>
 				</p>
 			</div>
 			<div class="span2">
+				<h6>Start bidding when price is at <span data-bind="text: startAt"></span></h6>
 				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/fokus/auction/' + auctionId}">Fokus</a></p>
 			</div>
 		</div>

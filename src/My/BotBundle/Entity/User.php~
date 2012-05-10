@@ -159,4 +159,24 @@ class User
     {
         return $this->bids;
     }
+
+    /**
+     * Set lastBidAt
+     *
+     * @param datetime $lastBidAt
+     */
+    public function setLastBidAt($lastBidAt)
+    {
+        $this->lastBidAt = $lastBidAt;
+    }
+
+    /**
+     * Get lastBidAt
+     *
+     * @return datetime 
+     */
+    public function getLastBidAt()
+    {
+        return $this->lastBidAt;
+    }
 }

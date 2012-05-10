@@ -34,20 +34,26 @@
 				</p>
 			</div>
 			<div class="span3">
-				<h3 data-bind="text: endAt">{{ auction.endAt }}</h3>
+				<h3 data-bind="text: endAt"></h3>
 				<p>
 					<strong data-bind="text: price">{{ auction.bids.last.price }}</strong>
 					<em data-bind="text: username">{{ auction.bids.last.user.username }}</em>
 				</p>
 			</div>
-			<div class="span3">
+			<div class="span2">
 				<p>
-					+{{ auction.step }} per bid
-					<br>Cost {{ auction.product.retail }}
+					Cost {{ auction.product.retail }} retail
+					<br>Increase {{ auction.step }} per bid
 				</p>
 			</div>
 			<div class="span2">
-				<p>{{ auction.status }}</p>
+				<h5>
+					<span data-bind="text: bidCount">?</span> bids made
+					<br>{{ auction.product.averageBids }} after {{ auction.product.auctions.count }} auctions
+				</h5>
+			</div>
+			<div class="span1">
+				<p>todo</p>
 			</div>
 		</div>
 		

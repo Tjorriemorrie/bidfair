@@ -8,16 +8,19 @@ class ScraperService
 	// products
 	private $products = array(
 		496 => 'JVC DVD Digital Theater System',
+		431 => 'Garmin Nuvi Voice Activated Navigator',
 		415 => 'BidFair Deluxe Sports Pack',
 		409 => 'Beach Luxurious Sun Proof Canopies',
 		403 => 'Boogie Board',
 		299 => 'Nikon Travelite',
 		277 => 'Weber 57cm One Touch',
 		239 => 'TaylorMade Tour Preferred MB Irons',
+		225 => 'Sony VAIO Notebook C Series',
 		186 => 'PLATINUM Voucher 80 FREE Bids',
 		155 => 'GOLD Voucher 40 FREE Bids',
 		150 => 'BidFair Deluxe Blackberry Pack',
 		123 => 'BidFair Deluxe Lifestyle Pack',
+		 98 => 'Genius G Shot Digital Camera',
 		 93 => 'NINTENDO SUPER BUNDLE',
 		 78 => 'GOLD Voucher 40 FREE Bids',
 		  4 => 'Supreme Voucher 100 Bids',
@@ -68,6 +71,9 @@ class ScraperService
 			// if no auction id, it does not exist
 			if (!isset($item->Auction->id)) {
 				continue;
+			} elseif ($item->Auction->id == 7365 && $item->LastBid->username == 'SMACKU') {
+				//die(var_dump(substr($item->Auction->price, 3)));
+				//die(var_dump($item));
 			}
 
 			// auction
@@ -102,7 +108,7 @@ class ScraperService
 			}
 
 			// time left?
-			if ($item->Auction->time_left == 1 && $item->Auction->end_time_string == '00:00:00' && new \DateTime($item->Auction->closes_on) < new \DateTime()) {
+			if ($item->Auction->time_left == 1 && in_array($item->Auction->end_time_string, array('00:00:00', '/0 Reservation')) && new \DateTime($item->Auction->closes_on) < new \DateTime()) {
 				$endAt = new \DateTime('-11 minutes');
 			} else {
 				$endAt = new \DateTime($item->Auction->time_left . ' seconds');

@@ -24,6 +24,11 @@ $(function() {
 			success		: function(data) {
 				//console.log(data);
 				vm.auctions(data);
+				if (data.length < 3) {
+					vm.delay(100);
+				} else if (vm.delay() != 5000) {
+					vm.delay(5000);
+				}
 				setTimeout(function() {
 					vm.update();
 				}, vm.delay());

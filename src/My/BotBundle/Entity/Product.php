@@ -33,8 +33,8 @@ class Product
 	 * @ORM\OneToMany(targetEntity="Auction", mappedBy="product")
 	 */
 	private $auctions;
-
-
+	
+	
 	/** @ORM\Column(type="datetime") */
 	private $createdAt;
 
@@ -57,6 +57,54 @@ class Product
 		$this->setUpdatedAt(new \DateTime());
 	}
 
+
+	public function getAverageBids()
+	{
+		$avg = array();
+		foreach ($this->getAuctions() as $auction) {
+			if (!$auction->getBids()->count()) {
+				continue;
+			}
+			
+			$avg[] = $auction->getBids()->last()->getPrice() / $auction->getStep();
+		}
+		
+		if (!$avg) {
+			return '-';
+		} else {
+			return round(array_sum($avg) / count($avg));
+		}
+	}
+
+	
+	public function getStandardDeviation()
+	{
+		$values = array();
+		foreach ($this->getAuctions() as $auction) {
+			if (!$auction->getBids()->count()) {
+				continue;
+			}
+			
+			$values[] = $auction->getBids()->last()->getPrice() / $auction->getStep();
+		}
+		
+		if (count($values) < 5) {
+			return;
+		}
+		
+		while (count($values) > 100) {
+			array_shift($values);
+		}
+		
+		$avg = array_sum($values) / count($values);
+		foreach ($values as $value) {
+			$exp[] = pow($value - $avg, 2);
+		}
+		$std = sqrt(array_sum($exp) / count($exp));
+		return $std;
+	}
+	
+	
 	////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
