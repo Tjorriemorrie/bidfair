@@ -33,7 +33,7 @@ $(function() {
 				
 			},
 			error		: function() {
-				vm.timeout(vm.timeout() + 2);
+				vm.timeout(vm.timeout() + 100);
 			},
 			success		: function(data) {
 				//console.log(data);
@@ -113,7 +113,6 @@ $(function() {
 			setTimeout(function() {
 				vm.status();
 			}, (1000 * 60 * 5));
-			vm.update();
 		});
 	}
 	
@@ -127,4 +126,5 @@ $(function() {
 	// start
 	ko.applyBindings(vm);
 	vm.status();
+	vm.update();
 });
