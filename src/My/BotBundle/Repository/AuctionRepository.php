@@ -61,6 +61,17 @@ class AuctionRepository extends EntityRepository
 
 
 	/**
+	 * Get One Hydrated
+	 */
+	public function getOneHydrated($auctionId)
+	{
+		$auction = $this->find($auctionId);
+		$hydrated = $this->hydrate(array($auction));
+		return $hydrated[0];
+	}
+
+
+	/**
 	 * Hydrates auction for ko
 	 */
 	private function hydrate($info)
@@ -89,7 +100,9 @@ class AuctionRepository extends EntityRepository
 			);
 		}
 
-		usort($data, function($a, $b) {return ($a['auctionId'] >= $b['auctionId'] ? 1 : -1);});
+		if (count($data) > 1) {
+			usort($data, function($a, $b) {return ($a['auctionId'] >= $b['auctionId'] ? 1 : -1);});
+		}
 
 		return $data;
 	}

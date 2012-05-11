@@ -2,18 +2,10 @@ $(function() {
 	console.log('fokus.js rdy');
 	
 	var vm = {
-		active		: ko.observable(0),
-		endAt		: ko.observable(0),
-		price		: ko.observable(0),
-		username	: ko.observable(''),
+		auction		: ko.observable(),
 		bidfair		: ko.observable('loading...'),
 		lag			: ko.observableArray([]),
 	};
-	
-	// bids made
-	vm.bidCount = ko.computed(function() {
-		return Math.round(vm.price() * 100);
-	}, vm);
 	
 	// update auction
 	vm.update = function() {
@@ -30,10 +22,7 @@ $(function() {
 			},
 			success		: function(data) {
 				//console.log(data);
-				vm.active(data.active);
-				vm.endAt(data.endAt);
-				vm.price(data.price);
-				vm.username(data.username);
+				vm.auction(data);
 				vm.update();
 			},
 			complete	: function() {
@@ -60,6 +49,7 @@ $(function() {
 			setTimeout(function() {
 				vm.status();
 			}, (1000 * 60 * 5));
+			vm.update();
 		});
 	}
 	
@@ -72,5 +62,5 @@ $(function() {
 
 	// start
 	ko.applyBindings(vm);
-	vm.update();
+	vm.status();
 });

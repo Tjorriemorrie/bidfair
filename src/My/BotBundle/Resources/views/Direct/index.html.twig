@@ -1,0 +1,78 @@
+{% extends 'MyBotBundle::layout.html.twig' %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="{{ asset('frontend/direct.js') }}"></script>
+{% endblock %}
+
+
+{% block auctions %}
+	<div class="container-fluid marginTop">
+
+		<div class="row-fluid">
+			<div class="span12">
+				<h3><a href="/">Actions</a> -> <span id="auctionId">{{ auction.auctionId }}<span></h3>
+			</div>
+		</div>
+
+		
+		<div class="row-fluid">
+			<div class="span12">
+				<p class="borderDashed">&nbsp;</p>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span4">
+				<p>
+					<em>[<span data-bind="text: auction().id"></span>]</em>
+					<strong>closed = <span data-bind="text: auction().closed"></span></strong>
+				</p>
+				<p>
+					<em>[<span data-bind="text: auction().product_id"></span>]</em>
+					<strong>{{ auction.productName }}</strong>
+				</p>
+				<p>Been on <em>{{ auction.auctionCount }}</em> auctions.</p>
+			</div>
+			<div class="span3">
+				<h3 data-bind="text: auction().end_time_string"></h3>
+				<p>
+					<strong><span data-bind="text: auction().price"></strong>
+					<em><span data-bind="text: lastBid().username"></span></em>
+				</p>
+				<p>Start bidding when price is at <strong>{{ auction.startAt }}</strong></p>
+			</div>
+			<div class="span3">
+				<p>
+					Cost <span data-bind="text: product().rrp"></span> retail
+					<br>Increase <span data-bind="text: auction().price_increment"></span> per bid
+					<br>Exp avg price of {{ auction.avgPrice }} &plusmn; {{ auction.stdDev }}
+				</p>
+			</div>
+			<div class="span2">
+				<p><em data-bind="text: timeout"></em></p>
+				<h4><a data-bind="text: makeBids, click: toggleBidding"></a></h4>
+				<p>
+					Bids made: <span data-bind="text: bidsCount"></span>
+					<br><em data-bind="text: bidTime"></em>
+				</p>
+			</div>
+		</div>
+		
+
+
+		{% if (app.debug) %}
+		<div class="row-fluid">
+			<div class="span12">
+				<h5>Debug:</h5>
+				<p>auction: <span data-bind="text: ko.toJSON(auction)"></span></p>
+				<p>lastBid: <span data-bind="text: ko.toJSON(lastBid)"></span></p>
+				<p>product: <span data-bind="text: ko.toJSON(product)"></span></p>
+			</div>
+		</div>
+		{% endif %}
+
+	</div>
+{% endblock %}
+

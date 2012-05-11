@@ -43,14 +43,8 @@ class FokusController extends Controller
     	$scraper->process($data, $em);
     	$em->flush();
 
-    	$auction = $em->getRepository('MyBotBundle:Auction')->find($auctionId);
+    	$auction = $em->getRepository('MyBotBundle:Auction')->getOneHydrated($auctionId);
 
-    	$bidfair = $this->get('bidfair');
-    	$data['active'] = ($auction->getStatus() ? 'Open' : 'Closed');
-    	$data['endAt'] = $bidfair->convertTimeAgo($auction->getEndAt()->getTimestamp());
-    	$data['price'] = ($auction->getBids()->count() ? number_format($auction->getBids()->last()->getPrice(), 2) : '-.--');
-    	$data['username'] = ($auction->getBids()->count() ? $auction->getBids()->last()->getUser()->getUsername() : '-');
-
-    	return new Response(json_encode($data));
+    	return new Response(json_encode($auction));
     }
 }

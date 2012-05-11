@@ -46,12 +46,13 @@
 				<p>
 					Cost <span data-bind="text: productRetail"></span> retail
 					<br>Increase <span data-bind="text: step"></span> per bid
-					<br>Exp avg price of <span data-bind="text: avgPrice"></span> with a stddev of <span data-bind="text: stdDev"></span>
+					<br>Exp avg price of <span data-bind="text: avgPrice"></span> &plusmn; <span data-bind="text: stdDev"></span>
 				</p>
 			</div>
 			<div class="span2">
 				<h6>Start bidding when price is at <span data-bind="text: startAt"></span></h6>
 				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/fokus/auction/' + auctionId}">Fokus</a></p>
+				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/direct/auction/' + auctionId}">Direct</a></p>
 			</div>
 		</div>
 		<!-- /ko -->

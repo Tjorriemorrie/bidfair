@@ -22,38 +22,34 @@
 				<p class="borderDashed">&nbsp;</p>
 			</div>
 		</div>
-		<div class="row-fluid">
+		<div class="row-fluid" data-bind="with: auction">
 			<div class="span4">
 				<p>
-					<em>[{{ auction.id }}]</em>
-					<strong data-bind="text: active">{{ auction.status }}</strong>
+					<em>[<span data-bind="text: auctionId"></span>]</em>
+					<strong><span data-bind="text: status"></span></strong>
 				</p>
 				<p>
-					<em>[{{ auction.product.id }}]</em>
-					<strong>{{ auction.product.name }}</strong>
+					<em>[<span data-bind="text: productId"></span>]</em>
+					<strong><span data-bind="text: productName"></span></strong>
 				</p>
+				<p>Been on <em data-bind="text: auctionCount"></em> auctions.</p>
 			</div>
 			<div class="span3">
 				<h3 data-bind="text: endAt"></h3>
 				<p>
-					<strong data-bind="text: price">{{ auction.bids.last.price }}</strong>
-					<em data-bind="text: username">{{ auction.bids.last.user.username }}</em>
+					<strong><span data-bind="text: price"></strong>
+					<em><span data-bind="text: userName"></span></em>
 				</p>
 			</div>
-			<div class="span2">
+			<div class="span3">
 				<p>
-					Cost {{ auction.product.retail }} retail
-					<br>Increase {{ auction.step }} per bid
+					Cost <span data-bind="text: productRetail"></span> retail
+					<br>Increase <span data-bind="text: step"></span> per bid
+					<br>Exp avg price of <span data-bind="text: avgPrice"></span> &plusmn; <span data-bind="text: stdDev"></span>
 				</p>
 			</div>
 			<div class="span2">
-				<h5>
-					<span data-bind="text: bidCount">?</span> bids made
-					<br>{{ auction.product.averageBids }} after {{ auction.product.auctions.count }} auctions
-				</h5>
-			</div>
-			<div class="span1">
-				<p>todo</p>
+				<h6>Start bidding when price is at <span data-bind="text: startAt"></span></h6>
 			</div>
 		</div>
 		
@@ -63,6 +59,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<h5>Debug:</h5>
+				<p>auction: <span data-bind="text: ko.toJSON(auction)"></span></p>
 			</div>
 		</div>
 		{% endif %}

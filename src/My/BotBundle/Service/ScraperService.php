@@ -8,6 +8,7 @@ class ScraperService
 	// products
 	private $products = array(
 		496 => 'JVC DVD Digital Theater System',
+		482 => 'Russell Hobbs Electric Blanket Double',
 		431 => 'Garmin Nuvi Voice Activated Navigator',
 		415 => 'BidFair Deluxe Sports Pack',
 		409 => 'Beach Luxurious Sun Proof Canopies',
@@ -16,10 +17,12 @@ class ScraperService
 		277 => 'Weber 57cm One Touch',
 		239 => 'TaylorMade Tour Preferred MB Irons',
 		225 => 'Sony VAIO Notebook C Series',
+		207 => 'Lady Gaga Monster Heartbeats',
 		186 => 'PLATINUM Voucher 80 FREE Bids',
 		155 => 'GOLD Voucher 40 FREE Bids',
 		150 => 'BidFair Deluxe Blackberry Pack',
 		123 => 'BidFair Deluxe Lifestyle Pack',
+		101 => 'Lenovo Thinkpad Tablet 64GB',
 		 98 => 'Genius G Shot Digital Camera',
 		 93 => 'NINTENDO SUPER BUNDLE',
 		 78 => 'GOLD Voucher 40 FREE Bids',
