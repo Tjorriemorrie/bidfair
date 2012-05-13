@@ -20,7 +20,7 @@ class Bid
 
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Auction", inversedBy="bids", fetch="LAZY")
+	 * @ORM\ManyToOne(targetEntity="Auction", inversedBy="bids", fetch="EAGER")
 	 */
 	private $auction;
 
@@ -30,7 +30,7 @@ class Bid
 	private $placedAt;
 
 	/**
-	 * @ORM\Column(type="decimal", scale=2, precision=4)
+	 * @ORM\Column(type="decimal", scale=2)
 	 */
 	private $price;
 

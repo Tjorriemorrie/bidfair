@@ -50,8 +50,11 @@
 				</p>
 			</div>
 			<div class="span2">
-				<h6>Start bidding when price is at <span data-bind="text: startAt"></span></h6>
-				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/fokus/auction/' + auctionId}">Fokus</a></p>
+				<h6>
+					Start at: <span data-bind="text: startAt"></span>
+					<br>Remaning: <span data-bind="text: bidsRemaining"></span>
+					<br>ETA: <span data-bind="text: (Math.round(bidsRemaining / 60))"></span> min
+				</h6>
 				<p data-bind="visible: status == 'Open'"><a data-bind="attr: {href: '/direct/auction/' + auctionId}">Direct</a></p>
 			</div>
 		</div>

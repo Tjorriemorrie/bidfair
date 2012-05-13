@@ -12,7 +12,7 @@ $(function() {
 		bidsCount	: ko.observable(0),
 		bidTime		: ko.observable(''),
 		bidfair		: ko.observable('loading...'),
-		timeout		: ko.observable(250),
+		timeout		: ko.observable(500),
 		lag			: ko.observableArray([]),
 	};
 	
@@ -33,7 +33,7 @@ $(function() {
 				
 			},
 			error		: function() {
-				vm.timeout(vm.timeout() + 100);
+				vm.timeout(vm.timeout() + 10);
 			},
 			success		: function(data) {
 				//console.log(data);
@@ -53,13 +53,13 @@ $(function() {
 				var duration = timeEnd - timeStart;
 				vm.lag.push(duration);
 				
-				if (vm.makeBids() && vm.auction().time_left() < 6 && haveMadeTheBid) {
+				if (vm.makeBids() && vm.auction().time_left() < 3 && haveMadeTheBid) {
 					haveMadeTheBid = false;
 					vm.makeBid();
 				} else {
 					setTimeout(function() {
 						vm.update();
-					}, vm.timeout());
+					}, 50);
 				}
 			}
 		});

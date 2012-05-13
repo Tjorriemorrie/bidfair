@@ -20,11 +20,12 @@ class DirectController extends Controller
     {
     	$em = $this->getDoctrine()->getEntityManager();
     	$auction = $em->getRepository('MyBotBundle:Auction')->getOneHydrated($auctionId);
+    	$auctionOriginal = $em->getRepository('MyBotBundle:Auction')->find($auctionId);
 
     	$session = $this->get('session');
     	$session->set('direct', $auctionId);
 
-    	return array('auction' => $auction);
+    	return array('auction' => $auction, 'auctionOriginal' => $auctionOriginal);
     }
 
 
@@ -50,10 +51,11 @@ class DirectController extends Controller
     public function bidAction()
     {
     	$session = $this->get('session');
-    	$auctionId = $session->get('direct', 0);
-
-    	sleep(1);
-
-    	return new Response(json_encode('Slept 1'));
+    	$auctionId = $session->get('fokus', 0);
+    	
+    	$bidfair = $this->get('bidfair');
+    	$bidfair->makeBid($auctionId);
+    	
+    	return new Response(json_encode('I assume the bid was successful'));
     }
 }

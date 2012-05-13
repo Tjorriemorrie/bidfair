@@ -88,7 +88,7 @@ class Product
 			$values[] = $auction->getBids()->last()->getPrice() / $auction->getStep();
 		}
 		
-		if (count($values) < 5) {
+		if (count($values) < 1) {
 			return;
 		}
 		

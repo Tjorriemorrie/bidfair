@@ -68,3 +68,6 @@ services:
     bidfair:
         class: My\BotBundle\Service\BidfairService
         arguments: [%bidfair_username%, %bidfair_password%]
+    stats:
+        class: My\BotBundle\Service\StatsService
+        

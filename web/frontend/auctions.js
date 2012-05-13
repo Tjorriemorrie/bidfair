@@ -53,9 +53,10 @@ $(function() {
 	vm.cleanup = function() {
 		$.getJSON('/cleanup', function(data) {
 			vm.bidfair(data);
+			vm.update();
 			setTimeout(function() {
 				vm.status();
-			}, 5000);
+			}, 10000);
 		});
 	}
 	
@@ -79,8 +80,5 @@ $(function() {
 
 	// start
 	ko.applyBindings(vm);
-	vm.update();
-	setTimeout(function() {
-		vm.cleanup();
-	}, 5000);
+	vm.cleanup();
 });

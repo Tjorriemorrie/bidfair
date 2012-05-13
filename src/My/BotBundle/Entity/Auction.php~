@@ -40,17 +40,18 @@ class Auction
 	private $endAt;
 
 	/**
-	 * @ORM\Column(type="decimal", scale=2, precision=4)
+	 * @ORM\Column(type="decimal", scale=2)
 	 */
 	private $step;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="auctions", fetch="LAZY")
+	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="auctions", fetch="EAGER")
 	 */
 	private $product;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction", cascade={"remove"}, orphanRemoval=true)
+	 * @ORM\OrderBy({"placedAt" = "ASC"})
 	 */
 	private $bids;
 

@@ -61,6 +61,22 @@
 		</div>
 		
 
+		<div class="row-fluid">
+			<div class="span12">
+				<h5>Previous Auctions:</h5>
+				{% for pauction in auctionOriginal.product.auctions %}
+					<p>
+						[{{ pauction.id }}]
+						{% if pauction.bids.count == 0 %}
+							No bids!!
+						{% else %}
+							{{ pauction.bids.last.price / pauction.step }} bids last on {{ pauction.bids.last.placedAt.format('Y-m-d H:i:s') }} for {{ pauction.bids.last.price }}
+						{% endif %}
+					</p>
+				{% endfor %}
+			</div>
+		</div>
+
 
 		{% if (app.debug) %}
 		<div class="row-fluid">

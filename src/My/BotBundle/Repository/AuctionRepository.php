@@ -14,28 +14,6 @@ use Doctrine\ORM\Query;
 class AuctionRepository extends EntityRepository
 {
 	/**
-	 * Delete open stuck auctions
-	 */
-	public function cleanUp()
-	{
-		$qb = $this->getEntityManager()->createQueryBuilder();
-		$auctions = $qb->select('a')->from('\MyBotBundle:Auction', 'a')
-			->where('a.status = ?1')->setParameter(1, 1)
-			->andWhere('a.endAt < ?2')->setParameter(2, date('Y-m-d H:i:s', strtotime('-2 day')))
-			->andWhere('a.createdAt < ?2')
-			//->andWhere('a.updatedAt > ?3')->setParameter(3, date('Y-m-d H:i:s', strtotime('-1 hour')))
-			->getQuery()
-			->getResult();
-
-		foreach ($auctions as $auction) {
-			$this->getEntityManager()->remove($auction);
-		}
-		$this->getEntityManager()->flush();
-		return count($auctions);
-	}
-
-
-	/**
 	 * Get hydrated array
 	 */
 	public function getHydrated($status)
@@ -92,6 +70,7 @@ class AuctionRepository extends EntityRepository
 				'avgPrice'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep(), 2),
 				'stdDev'		=> number_format($item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
 				'startAt'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep() + $item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
+				'bidsRemaining'	=> number_format( ($item->getProduct()->getAverageBids() * $item->getStep() + $item->getProduct()->getStandardDeviation() * $item->getStep()) - ($item->getBids()->count() ? $item->getBids()->last()->getPrice() : 0), 2) * 100,
 
 				'price'		=> ($item->getBids()->count() ? number_format($item->getBids()->last()->getPrice(), 2) : '-.--'),
 				'userId'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getId() : '-'),
@@ -137,7 +116,7 @@ class AuctionRepository extends EntityRepository
 			$data['auction_' . $auction->getId()] = $auction->getId();
 		}
 
-		if (count($data) < 16) {
+		if (count($data) < 8) {
 			$nextScrapeIds = $this->getNextScrapeIds();
 			$data = array_merge($data, $nextScrapeIds);
 		}
@@ -164,7 +143,7 @@ class AuctionRepository extends EntityRepository
 		}
 
 		$data = array();
-		while (count($data) < 16) {
+		while (count($data) < 20) {
 			$data['auction_' . $lastId[0]['id']] = (string)$lastId[0]['id'];
 			$lastId[0]['id']++;
 		}

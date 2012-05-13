@@ -9,6 +9,8 @@ class BidfairService
 {
 	private $username;
 	private $password;
+	private $url_bid = 'http://www.bidfair.co.za/bid.php';
+	private $url_login = 'http://www.bidfair.co.za/users/login';
 	
 	
 	public function __construct($username, $password)
@@ -40,15 +42,28 @@ class BidfairService
 	 */
 	public function logIn()
 	{
-		$url = 'http://www.bidfair.co.za/users/login';
-
 		$fields = array(
 			'data[User][username]'		=> $this->username,
 			'data[User][password]'		=> $this->password,
 			'data[User][remember_me]'	=> 1,
 		);
 
-		$page = $this->makeRequest($url, $fields);
+		$page = $this->makeRequest($this->url_login, $fields);
+		return $page;
+	}
+	
+	
+	/**
+	 * Make a bid to bidfair
+	 */
+	public function makeBid($id)
+	{
+		list($junk, $ms) = explode(' ', microtime());
+		$ms .= rand(100, 999);
+		$query = http_build_query(array('id' => $id, 'ms' => $ms));
+		$url = implode('?', array($this->url_bid, $query));
+		
+		$page = $this->makeRequest($url);
 		return $page;
 	}
 

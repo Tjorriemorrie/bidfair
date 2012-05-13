@@ -76,7 +76,26 @@ class DefaultController extends Controller
     public function cleanupAction()
     {
     	$em = $this->getDoctrine()->getEntityManager();
-    	$removed = $em->getRepository('MyBotBundle:Auction')->cleanUp();
+    	
+    	$stats = $this->get('stats');
+    	$removed = $stats->cleanUp($em);
+    	
     	return new Response(json_encode('Cleaned up ' . $removed));
+    }
+    
+    
+    /**
+     * @Route("/days")
+     * @Template()
+     */
+    public function daysAction()
+    {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$auctions = $em->getRepository('MyBotBundle:Auction')->findAll();
+    	
+    	$stats = $this->get('stats');
+    	$days = $stats->getBestDays($auctions);
+    	
+    	return array('days' => $days);
     }
 }
