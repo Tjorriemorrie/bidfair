@@ -71,6 +71,8 @@ class AuctionRepository extends EntityRepository
 				'stdDev'		=> number_format($item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
 				'startAt'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep() + $item->getProduct()->getStandardDeviation() * $item->getStep(), 2),
 				'bidsRemaining'	=> number_format( ($item->getProduct()->getAverageBids() * $item->getStep() + $item->getProduct()->getStandardDeviation() * $item->getStep()) - ($item->getBids()->count() ? $item->getBids()->last()->getPrice() : 0), 2) * 100,
+				//'startAt'		=> number_format($item->getProduct()->getAverageBids() * $item->getStep(), 2),
+				//'bidsRemaining'	=> number_format( ($item->getProduct()->getAverageBids() * $item->getStep()) - ($item->getBids()->count() ? $item->getBids()->last()->getPrice() : 0), 2) * 100,
 
 				'price'		=> ($item->getBids()->count() ? number_format($item->getBids()->last()->getPrice(), 2) : '-.--'),
 				'userId'	=> ($item->getBids()->count() ? $item->getBids()->last()->getUser()->getId() : '-'),

@@ -70,7 +70,7 @@ class Product
 		}
 		
 		if (!$avg) {
-			return '-';
+			return;
 		} else {
 			return round(array_sum($avg) / count($avg));
 		}

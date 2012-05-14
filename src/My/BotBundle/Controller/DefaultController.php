@@ -78,7 +78,8 @@ class DefaultController extends Controller
     	$em = $this->getDoctrine()->getEntityManager();
     	
     	$stats = $this->get('stats');
-    	$removed = $stats->cleanUp($em);
+    	//$removed = $stats->cleanUp($em);
+    	$removed = 'skipped';
     	
     	return new Response(json_encode('Cleaned up ' . $removed));
     }

@@ -47,7 +47,7 @@ class StatsService
 	public function cleanUp($em)
 	{
 		$removed = 0;
-		$auctions = $em->getRepository('MyBotBundle:Auction')->findAll();
+		$auctions = $em->getRepository('\MyBotBundle:Auction')->findAll();
 		
 		foreach ($auctions as $auction) {
 
@@ -78,6 +78,7 @@ class StatsService
 		}
 			
 		$em->flush();
+		$em->clear();
 		return $removed;
 	}
 }
